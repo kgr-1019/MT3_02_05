@@ -365,14 +365,14 @@ void DrawAABB1(const AABB& aabb1, Matrix4x4& viewProjectionMatrix, const Matrix4
 	// aabb1
 	Vector3 vertices1[8];
 	vertices1[0] = { aabb1.min.x,aabb1.min.y,aabb1.min.z };
-	vertices1[1] = { aabb1.min.x + 0.5f,aabb1.min.y,aabb1.min.z };
-	vertices1[2] = { aabb1.min.x + 0.5f,aabb1.min.y,aabb1.min.z + 0.5f };
-	vertices1[3] = { aabb1.min.x,aabb1.min.y,aabb1.min.z + 0.5f };
+	vertices1[1] = { aabb1.max.x,aabb1.min.y,aabb1.min.z };
+	vertices1[2] = { aabb1.max.x,aabb1.min.y,aabb1.max.z };
+	vertices1[3] = { aabb1.min.x,aabb1.min.y,aabb1.max.z };
 
-	vertices1[4] = { aabb1.max.x - 0.5f,aabb1.max.y,aabb1.max.z - 0.5f };
-	vertices1[5] = { aabb1.max.x,aabb1.max.y,aabb1.max.z - 0.5f };
+	vertices1[4] = { aabb1.min.x,aabb1.max.y,aabb1.min.z };
+	vertices1[5] = { aabb1.max.x,aabb1.max.y,aabb1.min.z };
 	vertices1[6] = { aabb1.max.x,aabb1.max.y,aabb1.max.z };
-	vertices1[7] = { aabb1.max.x - 0.5f,aabb1.max.y,aabb1.max.z };
+	vertices1[7] = { aabb1.min.x,aabb1.max.y,aabb1.max.z };
 
 
 	// a,b,cをScreen座標系まで変換
@@ -422,14 +422,13 @@ void DrawAABB2(const AABB& aabb2, Matrix4x4& viewProjectionMatrix, const Matrix4
 	// aabb2
 	Vector3 vertices2[8];
 	vertices2[0] = { aabb2.min.x,aabb2.min.y,aabb2.min.z };
-	vertices2[1] = { aabb2.min.x + 0.8f,aabb2.min.y,aabb2.min.z };
-	vertices2[2] = { aabb2.min.x + 0.8f,aabb2.min.y,aabb2.min.z + 0.8f };
-	vertices2[3] = { aabb2.min.x,aabb2.min.y,aabb2.min.z + 0.8f };
-
-	vertices2[4] = { aabb2.max.x - 0.8f,aabb2.max.y,aabb2.max.z - 0.8f };
-	vertices2[5] = { aabb2.max.x,aabb2.max.y,aabb2.max.z - 0.8f };
+	vertices2[1] = { aabb2.max.x,aabb2.min.y,aabb2.min.z };
+	vertices2[2] = { aabb2.max.x,aabb2.min.y,aabb2.max.z };
+	vertices2[3] = { aabb2.min.x,aabb2.min.y,aabb2.max.z };
+	vertices2[4] = { aabb2.min.x,aabb2.max.y,aabb2.min.z };
+	vertices2[5] = { aabb2.max.x,aabb2.max.y,aabb2.min.z };
 	vertices2[6] = { aabb2.max.x,aabb2.max.y,aabb2.max.z };
-	vertices2[7] = { aabb2.max.x - 0.8f,aabb2.max.y,aabb2.max.z };
+	vertices2[7] = { aabb2.min.x,aabb2.max.y,aabb2.max.z };
 
 
 	// a,b,cをScreen座標系まで変換
@@ -457,16 +456,17 @@ void DrawAABB2(const AABB& aabb2, Matrix4x4& viewProjectionMatrix, const Matrix4
 
 	
 	// aabb2
+	// 下辺
 	Novice::DrawLine((int)screenVertices2[0].x, (int)screenVertices2[0].y, (int)screenVertices2[1].x, (int)screenVertices2[1].y, color);
 	Novice::DrawLine((int)screenVertices2[1].x, (int)screenVertices2[1].y, (int)screenVertices2[2].x, (int)screenVertices2[2].y, color);
 	Novice::DrawLine((int)screenVertices2[2].x, (int)screenVertices2[2].y, (int)screenVertices2[3].x, (int)screenVertices2[3].y, color);
 	Novice::DrawLine((int)screenVertices2[3].x, (int)screenVertices2[3].y, (int)screenVertices2[0].x, (int)screenVertices2[0].y, color);
-
+	// 上辺
 	Novice::DrawLine((int)screenVertices2[4].x, (int)screenVertices2[4].y, (int)screenVertices2[5].x, (int)screenVertices2[5].y, color);
 	Novice::DrawLine((int)screenVertices2[5].x, (int)screenVertices2[5].y, (int)screenVertices2[6].x, (int)screenVertices2[6].y, color);
 	Novice::DrawLine((int)screenVertices2[6].x, (int)screenVertices2[6].y, (int)screenVertices2[7].x, (int)screenVertices2[7].y, color);
 	Novice::DrawLine((int)screenVertices2[7].x, (int)screenVertices2[7].y, (int)screenVertices2[4].x, (int)screenVertices2[4].y, color);
-
+	// 側辺
 	Novice::DrawLine((int)screenVertices2[1].x, (int)screenVertices2[1].y, (int)screenVertices2[5].x, (int)screenVertices2[5].y, color);
 	Novice::DrawLine((int)screenVertices2[2].x, (int)screenVertices2[2].y, (int)screenVertices2[6].x, (int)screenVertices2[6].y, color);
 	Novice::DrawLine((int)screenVertices2[3].x, (int)screenVertices2[3].y, (int)screenVertices2[7].x, (int)screenVertices2[7].y, color);
@@ -538,6 +538,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		Matrix4x4 viewportMatrix = MakeViewportMatrix(0, 0, float(kWindowsWidth), float(kWindowsHeight), 0.0f, 1.0f);
 
+
+		// minとmaxが入れ替わらないように
 		aabb1.min.x = (std::min)(aabb1.min.x, aabb1.max.x);
 		aabb1.max.x = (std::max)(aabb1.min.x, aabb1.max.x);
 		aabb1.min.y = (std::min)(aabb1.min.y, aabb1.max.y);
@@ -551,6 +553,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		aabb2.max.y = (std::max)(aabb2.min.y, aabb2.max.y);
 		aabb2.min.z = (std::min)(aabb2.min.z, aabb2.max.z);
 		aabb2.max.z = (std::max)(aabb2.min.z, aabb2.max.z);
+
 
 		// 当たり判定
 		if (IsCollision(aabb1, aabb2))
