@@ -7,6 +7,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include"imgui.h"
+
 const char kWindowTitle[] = "LD2B_04_コマツザキ_カガリ_タイトル";
 
 
